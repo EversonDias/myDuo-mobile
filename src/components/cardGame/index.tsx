@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity, ImageBackground, ImageSourcePropType, Text } from "react-native";
+import { TouchableOpacity, ImageBackground, Text, TouchableOpacityProps } from "react-native";
 import { THEME } from "../../theme";
 import { styles } from './styles';
 
@@ -12,7 +12,7 @@ export interface CardGameProps {
     bannerUrl: string;
 }
 
-interface Props extends TouchableOpacity {
+interface Props extends TouchableOpacityProps {
     data: CardGameProps;
 }
 
