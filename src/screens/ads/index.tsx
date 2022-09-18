@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Background } from "../../components/background";
 import { Heading } from "../../components/heading";
 import { DuoCard, DouCardProps } from "../../components/douCard";
+import { DuoMatch } from "../../components/duoMatch";
 
 import { styles } from "./styles";
 import { THEME } from "../../theme";
@@ -20,6 +21,7 @@ import { useEffect, useState } from "react";
 
 export function Ads() {
     const [duos, setDuos] = useState<DouCardProps[]>([])
+    const [discordDuoSelected, setDiscordDuoSelected] = useState('')
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -27,6 +29,12 @@ export function Ads() {
 
     function handleGoBack() {
         navigation.goBack();
+    }
+
+    async function getDiscordUser(adsId: string){
+        fetch(`http://192.168.10.3:3333/ads/${adsId}/discord`)
+            .then(response => response.json())
+            .then(data => setDiscordDuoSelected(data.discord))
     }
 
     useEffect(() => {
@@ -69,9 +77,9 @@ export function Ads() {
                     data={duos}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => (
-                        <DuoCard 
-                        data={item} 
-                        onConnect={() => { }}
+                        <DuoCard
+                            data={item}
+                            onConnect={() => getDiscordUser(item.id)}
                         />
                     )}
                     horizontal
@@ -85,6 +93,11 @@ export function Ads() {
                     )}
                 />
 
+                <DuoMatch
+                    visible={discordDuoSelected.length > 0}
+                    discord={discordDuoSelected}
+                    onClose={() => setDiscordDuoSelected('')}
+                />
             </SafeAreaView>
         </Background>
     )

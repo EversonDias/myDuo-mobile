@@ -17,7 +17,7 @@ export function Home() {
     const [games, setGames] = useState<CardGameProps[]>([]);
     const navigation = useNavigation();
 
-    function handleOpenGame({ id, title, bannerUrl }: CardGameProps){
+    function handleOpenGame({ id, title, bannerUrl }: CardGameProps) {
         navigation.navigate('ads', { id, title, bannerUrl });
     }
 
